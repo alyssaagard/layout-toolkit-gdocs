@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    /* ============================================
+       DESIGN SYSTEM
+       ============================================ */
+    :root {
+      --primary: #1B3A5C;
+      --primary-light: #2A5580;
+      --accent: #C0392B;
+      --accent-light: #E74C3C;
+      --bg: #FFFFFF;
+      --bg-secondary: #F4F6F8;
+      --bg-hover: #EDF0F3;
+      --text: #1A1A1A;
+      --text-secondary: #5A6577;
+      --text-muted: #8E99A8;
+      --border: #D5DCE4;
+      --success: #27AE60;
+      --radius: 6px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 13px;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.45;
+      overflow-x: hidden;
+    }
+
+    /* ============================================
+       HEADER
+       ============================================ */
+    .header {
+      background: var(--primary);
+      color: #fff;
+      padding: 14px 16px 10px;
+    }
+    .header h1 {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      margin-bottom: 2px;
+    }
+    .header .subtitle {
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    /* ============================================
+       TABS
+       ============================================ */
+    .tab-bar {
+      display: flex;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 9px 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { color: var(--primary); background: var(--bg-hover); }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      background: var(--bg);
+    }
+
+    .tab-content { display: none; padding: 12px 14px; }
+    .tab-content.active { display: block; }
+
+    /* ============================================
+       SECTION HEADINGS
+       ============================================ */
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin: 14px 0 8px;
+    }
+    .section-label:first-child { margin-top: 0; }
+
+    /* ============================================
+       TEMPLATE GALLERY
+       ============================================ */
+    .template-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .template-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 8px 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+    .template-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow);
+      transform: translateY(-1px);
+    }
+    .template-card svg {
+      width: 100%;
+      max-width: 100px;
+      height: auto;
+      margin-bottom: 6px;
+    }
+    .template-card .name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .template-card .desc {
+      font-size: 9px;
+      color: var(--text-secondary);
+      line-height: 1.3;
+    }
+
+    /* ============================================
+       FORM CONTROLS
+       ============================================ */
+    .control-group { margin-bottom: 10px; }
+    .control-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    select, input[type="text"], input[type="number"], input[type="color"] {
+      width: 100%;
+      padding: 6px 8px;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    select:focus, input:focus {
+      border-color: var(--primary);
+    }
+    input[type="color"] {
+      height: 32px;
+      padding: 2px;
+      cursor: pointer;
+    }
+
+    .row { display: flex; gap: 8px; }
+    .row > * { flex: 1; }
+
+    /* ============================================
+       BUTTONS
+       ============================================ */
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--primary-light); }
+    .btn-secondary {
+      background: var(--bg-secondary);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: var(--bg-hover); }
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-accent:hover { background: var(--accent-light); }
+    .btn-small {
+      padding: 5px 10px;
+      font-size: 11px;
+    }
+
+    .btn-row { display: flex; gap: 6px; margin-top: 6px; }
+    .btn-row .btn { flex: 1; }
+
+    /* ============================================
+       INSERT ELEMENT BUTTONS
+       ============================================ */
+    .insert-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .insert-btn {
+      padding: 10px 6px;
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+      color: var(--text);
+    }
+    .insert-btn:hover {
+      border-color: var(--primary);
+      background: var(--bg-hover);
+    }
+    .insert-btn .icon { font-size: 16px; display: block; margin-bottom: 3px; }
+
+    /* ============================================
+       BRAND PROFILES LIST
+       ============================================ */
+    .profile-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 6px;
+    }
+    .profile-item .name {
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .profile-item .colors {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .profile-item .swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      border: 1px solid rgba(0,0,0,0.15);
+    }
+    .profile-actions {
+      display: flex;
+      gap: 4px;
+    }
+    .profile-actions button {
+      padding: 3px 8px;
+      font-size: 10px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+    .profile-actions button:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .profile-actions button.delete:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ============================================
+       STATUS BAR
+       ============================================ */
+    .status {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 8px 14px;
+      font-size: 11px;
+      text-align: center;
+      background: var(--success);
+      color: #fff;
+      transform: translateY(100%);
+      transition: transform 0.25s;
+      z-index: 100;
+    }
+    .status.visible { transform: translateY(0); }
+    .status.error { background: var(--accent); }
+
+    /* ============================================
+       FOLDING GUIDE
+       ============================================ */
+    .fold-guide {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px;
+      margin-top: 8px;
+    }
+    .fold-guide h4 {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .fold-guide p {
+      font-size: 10px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+    .fold-guide svg {
+      width: 100%;
+      max-width: 250px;
+      display: block;
+      margin: 8px auto;
+    }
+
+    /* Spinner */
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>Layout Toolkit</h1>
+    <div class="subtitle">Professional layouts for your documents</div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="templates">Templates</button>
+    <button class="tab-btn" data-tab="layout">Layout</button>
+    <button class="tab-btn" data-tab="branding">Branding</button>
+  </div>
+
+  <!-- ==========================================
+       TAB 1: TEMPLATES
+       ========================================== -->
+  <div id="tab-templates" class="tab-content active">
+    <div class="section-label">Template Gallery</div>
+    <div class="template-grid">
+
+      <div class="template-card" onclick="runTemplate('insertTriFoldBrochure')">
+        <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="116" height="76" rx="3" fill="#fff" stroke="#C8D0DA" stroke-width="1"/>
+          <line x1="40" y1="4" x2="40" y2="76" stroke="#C8D0DA" stroke-width="0.5" stroke-dasharray="3,2"/>
+          <line x1="80" y1="4" x2="80" y2="76" stroke="#C8D0DA" stroke-width="0.5" stroke-dasharray="3,2"/>
+          <rect x="8" y="10" width="24" height="4" rx="1" fill="#1B3A5C"/>
+          <rect x="8" y="18" width="20" height="2" rx="1" fill="#D5DCE4"/>
+          <rect x="8" y="22" width="22" height="2" rx="1" fill="#D5DCE4"/>
+          <rect x="46" y="10" width="28" height="6" rx="1" fill="#1B3A5C"/>
+          <rect x="48" y="20" width="24" height="2" rx="1" fill="#D5DCE4"/>
+          <rect x="86" y="10" width="24" height="4" rx="1" fill="#C0392B"/>
+          <rect x="86" y="18" width="22" height="2" rx="1" fill="#D5DCE4"/>
+        </svg>
+        <div class="name">Tri-Fold Brochure</div>
+        <div class="desc">Three-panel layout for marketing materials</div>
+      </div>
+
+      <div class="template-card" onclick="runTemplate('insertBiFoldBrochure')">
+        <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="116" height="76" rx="3" fill="#fff" stroke="#C8D0DA" stroke-width="1"/>
+          <line x1="60" y1="4" x2="60" y2="76" stroke="#C8D0DA" stroke-width="0.5" stroke-dasharray="3,2"/>
+          <rect x="10" y="10" width="38" height="6" rx="1" fill="#1B3A5C"/>
+          <rect x="10" y="20" width="34" height="2" rx="1" fill="#D5DCE4"/>
+          <rect x="10" y="24" width="30" height="2" rx="1" fill="#D5DCE4"/>
+          <rect x="68" y="10" width="38" height="6" rx="1" fill="#C0392B"/>
+          <rect x="68" y="20" width="36" height="2" rx="1" fill="#D5DCE4"/>
+          <rect x="68" y="24" width="32" height="2" rx="1" fill="#D5DCE4"/>
+        </svg>
+        <div class="name">Bi-Fold Brochure</div>
+        <div class="desc">Two-panel spread for programs and features</div>
+      </div>
+
+      <div class="template-card" onclick="runTemplate('insertNewsletter')">
+        <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="116" height="76" rx="3" fill="#fff" stroke="#C8D0DA" stroke-width="1"/>
+          <rect x="4" y="4" width="112" height="14" rx="2" fill="#1B3A5C"/>
+          <rect x="30" y="8" width="60" height="3" rx="1" fill="rgba(255,255,255,0.3)"/>
+          <rect x="8" y="22" width="50" height="3" rx="1" fill="#1B3A5C"/>
+          <rect x="8" y="28" width="48" height="2" rx="1" fill="#D5DCE4"/>
+          <rect x="8" y="32" width="46" height="2" rx="1" fill="#D5DCE4"/>
+          <rect x="65" y="22" width="48" height="52" rx="2" fill="#F4F6F8"/>
+          <rect x="70" y="26" width="30" height="3" rx="1" fill="#C0392B"/>
+        </svg>
+        <div class="name">Classic Newsletter</div>
+        <div class="desc">Masthead, articles, and sidebar</div>
+      </div>
+
+      <div class="template-card" onclick="runTemplate('insertEventProgram')">
+        <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="116" height="76" rx="3" fill="#fff" stroke="#C8D0DA" stroke-width="1"/>
+          <rect x="25" y="6" width="70" height="5" rx="1" fill="#1B3A5C"/>
+          <rect x="35" y="14" width="50" height="3" rx="1" fill="#D5DCE4"/>
+          <rect x="8" y="22" width="104" height="4" rx="1" fill="#1B3A5C"/>
+          <rect x="8" y="29" width="104" height="3" rx="1" fill="#F4F6F8"/>
+          <rect x="8" y="35" width="104" height="3" rx="1" fill="#FFFFFF"/>
+          <rect x="8" y="41" width="104" height="3" rx="1" fill="#F4F6F8"/>
+          <rect x="8" y="47" width="104" height="3" rx="1" fill="#FFFFFF"/>
+          <rect x="8" y="53" width="104" height="3" rx="1" fill="#F4F6F8"/>
+        </svg>
+        <div class="name">Event Program</div>
+        <div class="desc">Schedule with speaker and venue details</div>
+      </div>
+
+      <div class="template-card" onclick="runTemplate('insertBusinessCard')">
+        <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="15" y="15" width="90" height="50" rx="3" fill="#fff" stroke="#C8D0DA" stroke-width="1"/>
+          <rect x="22" y="22" width="40" height="4" rx="1" fill="#1B3A5C"/>
+          <rect x="22" y="29" width="28" height="2" rx="1" fill="#C0392B"/>
+          <rect x="22" y="38" width="50" height="2" rx="1" fill="#D5DCE4"/>
+          <rect x="22" y="43" width="45" height="2" rx="1" fill="#D5DCE4"/>
+          <rect x="22" y="48" width="40" height="2" rx="1" fill="#D5DCE4"/>
+        </svg>
+        <div class="name">Business Card</div>
+        <div class="desc">Standard 3.5 x 2 in. card layout</div>
+      </div>
+
+      <div class="template-card" onclick="runTemplate('insertFlyer')">
+        <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="116" height="76" rx="3" fill="#fff" stroke="#C8D0DA" stroke-width="1"/>
+          <rect x="4" y="4" width="112" height="30" rx="2" fill="#1B3A5C"/>
+          <rect x="20" y="10" width="80" height="8" rx="1" fill="rgba(255,255,255,0.3)"/>
+          <rect x="15" y="40" width="90" height="5" rx="1" fill="#C0392B"/>
+          <rect x="10" y="50" width="100" height="3" rx="1" fill="#D5DCE4"/>
+          <rect x="10" y="55" width="100" height="3" rx="1" fill="#D5DCE4"/>
+          <rect x="25" y="68" width="70" height="8" rx="4" fill="#C0392B"/>
+        </svg>
+        <div class="name">Event Flyer</div>
+        <div class="desc">Bold headline with call to action</div>
+      </div>
+
+    </div>
+
+    <!-- Folding Guide -->
+    <div class="section-label">Folding &amp; Print Guide</div>
+    <div class="fold-guide">
+      <h4>Tri-Fold Brochure</h4>
+      <svg viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="10" width="80" height="60" rx="2" fill="#F4F6F8" stroke="#1B3A5C" stroke-width="1"/>
+        <text x="41" y="44" text-anchor="middle" font-size="8" fill="#1B3A5C">Back</text>
+        <rect x="85" y="10" width="80" height="60" rx="2" fill="#E8EDF2" stroke="#1B3A5C" stroke-width="1"/>
+        <text x="125" y="44" text-anchor="middle" font-size="8" fill="#1B3A5C">Front</text>
+        <rect x="169" y="10" width="80" height="60" rx="2" fill="#F4F6F8" stroke="#1B3A5C" stroke-width="1"/>
+        <text x="209" y="44" text-anchor="middle" font-size="8" fill="#1B3A5C">Flap</text>
+        <path d="M83 72 L87 78" stroke="#C0392B" stroke-width="1.5"/>
+        <path d="M167 72 L171 78" stroke="#C0392B" stroke-width="1.5"/>
+        <text x="85" y="78" font-size="6" fill="#C0392B">fold</text>
+        <text x="169" y="78" font-size="6" fill="#C0392B">fold</text>
+      </svg>
+      <p>Print double-sided on Letter paper (landscape). Fold the right flap in first, then fold the left panel over it.</p>
+    </div>
+    <div class="fold-guide">
+      <h4>Bi-Fold Brochure</h4>
+      <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="80" height="60" rx="2" fill="#F4F6F8" stroke="#1B3A5C" stroke-width="1"/>
+        <text x="50" y="44" text-anchor="middle" font-size="8" fill="#1B3A5C">Back</text>
+        <rect x="94" y="10" width="80" height="60" rx="2" fill="#E8EDF2" stroke="#1B3A5C" stroke-width="1"/>
+        <text x="134" y="44" text-anchor="middle" font-size="8" fill="#1B3A5C">Front</text>
+        <path d="M92 72 L96 78" stroke="#C0392B" stroke-width="1.5"/>
+        <text x="90" y="78" font-size="6" fill="#C0392B">fold</text>
+      </svg>
+      <p>Print double-sided on Letter paper (landscape). Fold in half along the center line.</p>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       TAB 2: LAYOUT TOOLS
+       ========================================== -->
+  <div id="tab-layout" class="tab-content">
+    <div class="section-label">Page Setup</div>
+
+    <div class="control-group">
+      <label>Orientation</label>
+      <div class="btn-row">
+        <button class="btn btn-secondary btn-small" onclick="setOrientation('portrait')">Portrait</button>
+        <button class="btn btn-secondary btn-small" onclick="setOrientation('landscape')">Landscape</button>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label>Paper Size</label>
+      <select id="pageSize" onchange="setSize(this.value)">
+        <option value="letter">Letter (8.5 x 11)</option>
+        <option value="legal">Legal (8.5 x 14)</option>
+        <option value="tabloid">Tabloid (11 x 17)</option>
+        <option value="a4">A4 (210 x 297 mm)</option>
+        <option value="a5">A5 (148 x 210 mm)</option>
+      </select>
+    </div>
+
+    <div class="section-label">Margins (points)</div>
+    <div class="row">
+      <div class="control-group">
+        <label>Top</label>
+        <input type="number" id="marginTop" value="72" min="0" max="288">
+      </div>
+      <div class="control-group">
+        <label>Bottom</label>
+        <input type="number" id="marginBottom" value="72" min="0" max="288">
+      </div>
+    </div>
+    <div class="row">
+      <div class="control-group">
+        <label>Left</label>
+        <input type="number" id="marginLeft" value="72" min="0" max="288">
+      </div>
+      <div class="control-group">
+        <label>Right</label>
+        <input type="number" id="marginRight" value="72" min="0" max="288">
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="applyMargins()">Apply Margins</button>
+
+    <div class="section-label">Insert Elements</div>
+    <div class="insert-grid">
+      <button class="insert-btn" onclick="runFunction('insertTextPlaceholder')">
+        <span class="icon">T</span>
+        Text Placeholder
+      </button>
+      <button class="insert-btn" onclick="runFunction('insertDivider')">
+        <span class="icon">&mdash;</span>
+        Divider
+      </button>
+      <button class="insert-btn" onclick="runFunction('insertPullQuote')">
+        <span class="icon">&ldquo;</span>
+        Pull Quote
+      </button>
+      <button class="insert-btn" onclick="runFunction('insertCalloutBox')">
+        <span class="icon">&#9632;</span>
+        Callout Box
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       TAB 3: BRANDING
+       ========================================== -->
+  <div id="tab-branding" class="tab-content">
+    <div class="section-label">Brand Profile</div>
+
+    <div class="control-group">
+      <label>Profile Name</label>
+      <input type="text" id="brandName" value="Default" placeholder="e.g., My Organization">
+    </div>
+
+    <div class="control-group">
+      <label>Organization Name</label>
+      <input type="text" id="orgName" value="Your Organization" placeholder="Displayed in templates">
+    </div>
+
+    <div class="row">
+      <div class="control-group">
+        <label>Primary Color</label>
+        <input type="color" id="primaryColor" value="#1B3A5C">
+      </div>
+      <div class="control-group">
+        <label>Accent Color</label>
+        <input type="color" id="accentColor" value="#C0392B">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="control-group">
+        <label>Heading Font</label>
+        <select id="headingFont">
+          <option value="Georgia">Georgia</option>
+          <option value="Cambria">Cambria</option>
+          <option value="Garamond">Garamond</option>
+          <option value="Times New Roman">Times New Roman</option>
+          <option value="Calibri">Calibri</option>
+          <option value="Arial">Arial</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Body Font</label>
+        <select id="bodyFont">
+          <option value="Arial" selected>Arial</option>
+          <option value="Calibri">Calibri</option>
+          <option value="Georgia">Georgia</option>
+          <option value="Times New Roman">Times New Roman</option>
+          <option value="Roboto">Roboto</option>
+          <option value="Open Sans">Open Sans</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="saveBrand()">Save Profile</button>
+      <button class="btn btn-accent" onclick="setActive()">Set Active</button>
+    </div>
+
+    <div class="section-label">Saved Profiles</div>
+    <div id="profilesList">
+      <p style="color: var(--text-muted); font-size: 11px;">No saved profiles yet.</p>
+    </div>
+  </div>
+
+  <!-- STATUS BAR -->
+  <div class="status" id="status"></div>
+
+  <script>
+    // ============================================
+    // TAB SWITCHING
+    // ============================================
+    document.querySelectorAll('.tab-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        document.querySelectorAll('.tab-content').forEach(function(t) { t.classList.remove('active'); });
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // ============================================
+    // STATUS MESSAGING
+    // ============================================
+    function showStatus(msg, isError) {
+      var el = document.getElementById('status');
+      el.textContent = msg;
+      el.className = 'status visible' + (isError ? ' error' : '');
+      setTimeout(function() { el.className = 'status'; }, 3000);
+    }
+
+    // ============================================
+    // TEMPLATE INSERTION
+    // ============================================
+    function runTemplate(funcName) {
+      showStatus('Building template...');
+      google.script.run
+        .withSuccessHandler(function(result) {
+          showStatus(result.message || 'Template created.');
+        })
+        .withFailureHandler(function(err) {
+          showStatus('Error: ' + err.message, true);
+        })
+        [funcName]();
+    }
+
+    // ============================================
+    // GENERIC FUNCTION RUNNER
+    // ============================================
+    function runFunction(funcName) {
+      google.script.run
+        .withSuccessHandler(function() { showStatus('Done.'); })
+        .withFailureHandler(function(err) { showStatus('Error: ' + err.message, true); })
+        [funcName]();
+    }
+
+    // ============================================
+    // LAYOUT TOOLS
+    // ============================================
+    function setOrientation(orientation) {
+      google.script.run
+        .withSuccessHandler(function() { showStatus('Orientation set to ' + orientation + '.'); })
+        .withFailureHandler(function(err) { showStatus('Error: ' + err.message, true); })
+        .setPageOrientation(orientation);
+    }
+
+    function setSize(size) {
+      google.script.run
+        .withSuccessHandler(function() { showStatus('Page size updated.'); })
+        .withFailureHandler(function(err) { showStatus('Error: ' + err.message, true); })
+        .setPageSize(size);
+    }
+
+    function applyMargins() {
+      var t = Number(document.getElementById('marginTop').value);
+      var b = Number(document.getElementById('marginBottom').value);
+      var l = Number(document.getElementById('marginLeft').value);
+      var r = Number(document.getElementById('marginRight').value);
+      google.script.run
+        .withSuccessHandler(function() { showStatus('Margins applied.'); })
+        .withFailureHandler(function(err) { showStatus('Error: ' + err.message, true); })
+        .setMargins(t, b, l, r);
+    }
+
+    // ============================================
+    // BRANDING
+    // ============================================
+    function getBrandFromForm() {
+      return {
+        name: document.getElementById('brandName').value.trim(),
+        orgName: document.getElementById('orgName').value.trim(),
+        primaryColor: document.getElementById('primaryColor').value,
+        accentColor: document.getElementById('accentColor').value,
+        headingFont: document.getElementById('headingFont').value,
+        bodyFont: document.getElementById('bodyFont').value
+      };
+    }
+
+    function populateForm(profile) {
+      document.getElementById('brandName').value = profile.name || '';
+      document.getElementById('orgName').value = profile.orgName || '';
+      document.getElementById('primaryColor').value = profile.primaryColor || '#1B3A5C';
+      document.getElementById('accentColor').value = profile.accentColor || '#C0392B';
+      document.getElementById('headingFont').value = profile.headingFont || 'Georgia';
+      document.getElementById('bodyFont').value = profile.bodyFont || 'Arial';
+    }
+
+    function saveBrand() {
+      var data = getBrandFromForm();
+      if (!data.name) { showStatus('Enter a profile name.', true); return; }
+      google.script.run
+        .withSuccessHandler(function() {
+          showStatus('Profile "' + data.name + '" saved.');
+          loadProfiles();
+        })
+        .withFailureHandler(function(err) { showStatus('Error: ' + err.message, true); })
+        .saveBrandProfile(data);
+    }
+
+    function setActive() {
+      var name = document.getElementById('brandName').value.trim();
+      if (!name) { showStatus('Enter a profile name.', true); return; }
+      // Save first, then set active
+      var data = getBrandFromForm();
+      google.script.run
+        .withSuccessHandler(function() {
+          google.script.run
+            .withSuccessHandler(function() {
+              showStatus('"' + name + '" is now the active brand.');
+              loadProfiles();
+            })
+            .setActiveBrand(name);
+        })
+        .saveBrandProfile(data);
+    }
+
+    function loadProfiles() {
+      google.script.run
+        .withSuccessHandler(function(profiles) {
+          var container = document.getElementById('profilesList');
+          var keys = Object.keys(profiles);
+          if (keys.length === 0) {
+            container.innerHTML = '<p style="color: var(--text-muted); font-size: 11px;">No saved profiles yet.</p>';
+            return;
+          }
+          var html = '';
+          keys.forEach(function(key) {
+            var p = profiles[key];
+            html += '<div class="profile-item">' +
+              '<div><div class="name">' + escapeHtml(p.name) + '</div>' +
+              '<div class="colors">' +
+              '<span class="swatch" style="background:' + p.primaryColor + '"></span>' +
+              '<span class="swatch" style="background:' + p.accentColor + '"></span>' +
+              '<span style="font-size:10px;color:var(--text-muted);">' + p.headingFont + ' / ' + p.bodyFont + '</span>' +
+              '</div></div>' +
+              '<div class="profile-actions">' +
+              '<button onclick="loadProfile(\'' + escapeHtml(p.name) + '\')">Load</button>' +
+              '<button class="delete" onclick="deleteProfile(\'' + escapeHtml(p.name) + '\')">Delete</button>' +
+              '</div></div>';
+          });
+          container.innerHTML = html;
+        })
+        .loadBrandProfiles();
+    }
+
+    function loadProfile(name) {
+      google.script.run
+        .withSuccessHandler(function(profiles) {
+          if (profiles[name]) {
+            populateForm(profiles[name]);
+            showStatus('Loaded "' + name + '".');
+          }
+        })
+        .loadBrandProfiles();
+    }
+
+    function deleteProfile(name) {
+      if (!confirm('Delete profile "' + name + '"?')) return;
+      google.script.run
+        .withSuccessHandler(function() {
+          showStatus('Profile deleted.');
+          loadProfiles();
+        })
+        .deleteBrandProfile(name);
+    }
+
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // ============================================
+    // INIT
+    // ============================================
+    loadProfiles();
+  </script>
+
+</body>
+</html>
