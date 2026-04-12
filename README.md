@@ -22,7 +22,7 @@ Companion project to [Layout Toolkit for Word](https://github.com/alyssaagard/la
 2. Click **Extensions > Apps Script**.
 3. Delete the default `myFunction` code in `Code.gs`.
 4. Copy the contents of `Code.gs` from this project and paste it in.
-5. Click the **+** next to Files and select **HTML**. Name the file `Sidebar` (without the .html extension, as Apps Script adds it automatically).
+5. Click the **+** next to Files and select **HTML**. Name the file `Sidebar` (case sensitive) (without the .html extension, as Apps Script adds it automatically). 
 6. Delete the default HTML content and paste in the contents of `Sidebar.html` from this project.
 7. Save both files (Ctrl+S / Cmd+S).
 8. Close the Apps Script editor tab.
